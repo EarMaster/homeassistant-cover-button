@@ -1,6 +1,6 @@
 # One-Button Cover Control
 
-> **Current Version: 1.2.2**
+> **Current Version: 1.2.3**
 
 A Home Assistant blueprint that allows you to control any cover, shade, blind, or garage door with a single button. Press once to open if closed, close if open or stop if currently moving.
 
@@ -100,6 +100,21 @@ The blueprint uses intelligent logic to determine the appropriate action:
 Contributions are welcome! Please feel free to submit issues or pull requests.
 
 ## 📝 Changelog
+
+### Version 1.2.3
+
+- **Improved User Interface**: Reorganized configuration for better usability
+  - Moved "Cover" field to first position for easier setup
+  - Renamed "Cover Entity" to "Cover" for simplicity
+  - Grouped advanced options in collapsible "Further Options" section
+- **Enhanced Compatibility**: Removed domain restriction for universal device support
+  - Now works with any device that can trigger events (not just buttons)
+
+### Version 1.2.1
+
+- Fixed GitHub Actions workflow permissions for automated tagging
+- Resolved template issues in device triggers
+- Updated automation for better reliability
 
 ### Version 1.2.0
 

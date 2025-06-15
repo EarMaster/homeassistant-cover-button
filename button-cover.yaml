@@ -5,7 +5,7 @@ blueprint:
     
     Press once to open if closed, close if open, or stop if moving. Perfect for awnings, blinds, curtains, and garage doors.
     
-    *Version:* 1.2.2
+    *Version:* 1.2.3
   domain: automation
   input:
     cover_entity:
@@ -22,8 +22,9 @@ blueprint:
         Compatible with any device that can trigger device actions.
       selector:
         device:
-    options:
-      name: Further Options
+
+    advanced:
+      name: Advanced
       description: Advanced configuration options
       collapsed: true
       input:
@@ -66,13 +67,15 @@ blueprint:
 
 variables:
   cover_entity: !input cover_entity
-  use_entity_actions: !input options.use_entity_actions
+  use_entity_actions: !input 'advanced.use_entity_actions'
+  button_action: !input 'advanced.button_action'
+  button_subtype: !input 'advanced.button_subtype'
 
 trigger:
   - platform: device
     device_id: !input button_device
-    type: !input options.button_action
-    subtype: !input options.button_subtype
+    type: "{{ button_action }}"
+    subtype: "{{ button_subtype }}"
 
 condition: []
 
