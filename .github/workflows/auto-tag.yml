@@ -6,6 +6,9 @@ on:
     paths:
       - 'button-cover.yaml'
 
+permissions:
+  contents: write
+
 jobs:
   auto-tag:
     runs-on: ubuntu-latest
@@ -13,6 +16,7 @@ jobs:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Extract version from blueprint
       id: extract_version
@@ -35,15 +39,13 @@ jobs:
         else
           echo "tag_exists=false" >> $GITHUB_OUTPUT
           echo "Tag ${{ steps.extract_version.outputs.version }} does not exist"
-        fi
-
-    - name: Create and push tag
+        fi    - name: Create and push tag
       if: steps.check_tag.outputs.tag_exists == 'false'
       run: |
-        git config --global user.name 'GitHub Actions'
-        git config --global user.email 'actions@github.com'
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
         git tag -a "${{ steps.extract_version.outputs.version }}" -m "Release ${{ steps.extract_version.outputs.version }}"
-        git push origin "${{ steps.extract_version.outputs.version }}"
+        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git "${{ steps.extract_version.outputs.version }}"
         echo "Created and pushed tag: ${{ steps.extract_version.outputs.version }}"
 
     - name: Create GitHub Release

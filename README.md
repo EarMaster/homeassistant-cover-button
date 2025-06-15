@@ -13,7 +13,6 @@ A Home Assistant blueprint that allows you to control any cover, shade, blind, o
 - **Flexible Button Support**: Compatible with any device that triggers an event (even if it's not technically a button)
 - **Multiple Action Types**: Supports various actions (short press, long press, double press, etc.)
 - **Entity/Device Actions**: Choose between device actions or entity service calls for maximum compatibility
-- **Stop Function**: Automatically stops covers that are currently moving
 
 ## 🚀 Quick Start
 
