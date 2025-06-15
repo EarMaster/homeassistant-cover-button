@@ -2,7 +2,7 @@
 
 A Home Assistant blueprint that allows you to control any cover, shade, blind, or garage door with a single button. Press once to open if closed, close if open or stop if currently moving.
 
-[![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A//raw.githubusercontent.com/EarMaster/homeassistant-cover-button/main/button-cover.yaml)
+[![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A//raw.githubusercontent.com/EarMaster/home-assistant-cover-button/main/button-cover.yaml)
 
 ## ✨ Features
 
