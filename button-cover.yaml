@@ -5,7 +5,7 @@ blueprint:
     
     Press once to open if closed, close if open, or stop if moving. Perfect for awnings, blinds, curtains, and garage doors.
     
-    *Version:* 1.2.1
+    *Version:* 1.2.0
   domain: automation
   input:
     button_device:
