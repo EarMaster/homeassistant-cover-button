@@ -12,7 +12,6 @@ blueprint:
         Compatible with any device that can trigger device actions.
       selector:
         device:
-          domain: button
     button_action:
       name: Button Action
       description: >
