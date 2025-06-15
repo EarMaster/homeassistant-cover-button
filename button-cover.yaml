@@ -1,0 +1,159 @@
+blueprint:
+  name: "🎮 One-Button Cover Control"
+  description: >
+    Control any cover/shade with a single button. Press once to open if closed, 
+    close if open, or stop if moving. Perfect for awnings, blinds, curtains, and garage doors.
+  domain: automation
+  input:
+    button_device:
+      name: Button Device
+      description: >
+        The button or remote control device that will control the cover.
+        Compatible with any device that can trigger device actions.
+      selector:
+        device:
+          domain: button
+    button_action:
+      name: Button Action
+      description: >
+        The specific button action to trigger the automation (e.g., button press, double press).
+      default: remote_button_short_press
+      selector:
+        select:
+          options:
+            - remote_button_short_press
+            - remote_button_long_press
+            - remote_button_double_press
+            - key_press_1
+            - key_press_2
+            - key_press_3
+            - key_press_4
+            - button_1
+            - button_2
+            - button_3
+            - button_4
+          custom_value: true
+    button_subtype:
+      name: Button Subtype (Optional)
+      description: >
+        Additional button identifier if needed (e.g., button_1, button_2). 
+        Leave empty if not required.
+      default: ""
+      selector:
+        text:
+    cover_entity:
+      name: Cover Entity
+      description: >
+        The cover, shade, blind, or garage door to control.
+      selector:
+        entity:
+          domain: cover
+    use_entity_actions:
+      name: Use Entity Actions Instead of Device Actions
+      description: >
+        Enable this if your cover doesn't work with device actions. 
+        This will use entity-based service calls instead.
+      default: false
+      selector:
+        boolean:
+
+variables:
+  cover_entity: !input cover_entity
+  use_entity_actions: !input use_entity_actions
+
+trigger:
+  - platform: device
+    device_id: !input button_device
+    domain: "{{ state_attr(button_device, 'domain') | default('zha') }}"
+    type: !input button_action
+    subtype: !input button_subtype
+
+condition: []
+
+action:
+  - choose:
+      # Stop if cover is moving (opening or closing)
+      - conditions:
+          - condition: or
+            conditions:
+              - condition: state
+                entity_id: !input cover_entity
+                state: "opening"
+              - condition: state
+                entity_id: !input cover_entity
+                state: "closing"
+        sequence:
+          - choose:
+              - conditions:
+                  - condition: template
+                    value_template: "{{ use_entity_actions }}"
+                sequence:
+                  - service: cover.stop_cover
+                    target:
+                      entity_id: !input cover_entity
+            default:
+              - device_id: "{{ device_id(cover_entity) }}"
+                domain: cover
+                entity_id: !input cover_entity
+                type: stop
+        alias: "Stop cover"
+
+      # Close if cover is open
+      - conditions:
+          - condition: state
+            entity_id: !input cover_entity
+            state: "open"
+        sequence:
+          - choose:
+              - conditions:
+                  - condition: template
+                    value_template: "{{ use_entity_actions }}"
+                sequence:
+                  - service: cover.close_cover
+                    target:
+                      entity_id: !input cover_entity
+            default:
+              - device_id: "{{ device_id(cover_entity) }}"
+                domain: cover
+                entity_id: !input cover_entity
+                type: close
+        alias: "Close cover"
+
+      # Open if cover is closed
+      - conditions:
+          - condition: state
+            entity_id: !input cover_entity
+            state: "closed"
+        sequence:
+          - choose:
+              - conditions:
+                  - condition: template
+                    value_template: "{{ use_entity_actions }}"
+                sequence:
+                  - service: cover.open_cover
+                    target:
+                      entity_id: !input cover_entity
+            default:
+              - device_id: "{{ device_id(cover_entity) }}"
+                domain: cover
+                entity_id: !input cover_entity
+                type: open
+        alias: "Open cover"
+
+    # Default action for any other state (e.g., partially open)
+    default:
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: "{{ use_entity_actions }}"
+            sequence:
+              - service: cover.toggle
+                target:
+                  entity_id: !input cover_entity
+        default:
+          - device_id: "{{ device_id(cover_entity) }}"
+            domain: cover
+            entity_id: !input cover_entity
+            type: toggle
+
+mode: single
