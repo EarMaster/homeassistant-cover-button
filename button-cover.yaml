@@ -2,10 +2,10 @@ blueprint:
   name: "One-Button Cover Control"
   description: >
     Control any cover/shade with a single button.
-     
+    
     Press once to open if closed, close if open, or stop if moving. Perfect for awnings, blinds, curtains, and garage doors.
     
-    *Version:* 1.2.0
+    *Version:* 1.2.1
   domain: automation
   input:
     button_device:
@@ -66,7 +66,6 @@ variables:
 trigger:
   - platform: device
     device_id: !input button_device
-    domain: "{{ state_attr(button_device, 'domain') | default('zha') }}"
     type: !input button_action
     subtype: !input button_subtype
 
