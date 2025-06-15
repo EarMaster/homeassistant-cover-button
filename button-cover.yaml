@@ -2,7 +2,7 @@ blueprint:
   name: "One-Button Cover Control"
   description: >
     Control any cover/shade with a single button.
-    
+     
     Press once to open if closed, close if open, or stop if moving. Perfect for awnings, blinds, curtains, and garage doors.
     
     *Version:* 1.2.0
