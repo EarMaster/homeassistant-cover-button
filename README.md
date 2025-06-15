@@ -16,6 +16,8 @@ A Home Assistant blueprint that allows you to control any cover, shade, blind, o
 
 ## 🚀 Quick Start
 
+![Home Assistant Blueprint Configuration](screenshot.png)
+
 ### Installation
 
 1. Click the "Add Blueprint to Home Assistant" button above, or
