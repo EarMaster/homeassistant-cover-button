@@ -5,9 +5,16 @@ blueprint:
     
     Press once to open if closed, close if open, or stop if moving. Perfect for awnings, blinds, curtains, and garage doors.
     
-    *Version:* 1.2.1
+    *Version:* 1.2.2
   domain: automation
   input:
+    cover_entity:
+      name: Cover
+      description: >
+        The cover, shade, blind or garage door to control.
+      selector:
+        entity:
+          domain: cover
     button_device:
       name: Button Device
       description: >
@@ -15,59 +22,57 @@ blueprint:
         Compatible with any device that can trigger device actions.
       selector:
         device:
-    button_action:
-      name: Button Action
-      description: >
-        The specific button action to trigger the automation (e.g., button press, double press).
-      default: remote_button_short_press
-      selector:
-        select:
-          options:
-            - remote_button_short_press
-            - remote_button_long_press
-            - remote_button_double_press
-            - key_press_1
-            - key_press_2
-            - key_press_3
-            - key_press_4
-            - button_1
-            - button_2
-            - button_3
-            - button_4
-          custom_value: true
-    button_subtype:
-      name: Button Subtype (Optional)
-      description: >
-        Additional button identifier if needed (e.g., button_1, button_2). 
-        Leave empty if not required.
-      default: ""
-      selector:
-        text:
-    cover_entity:
-      name: Cover Entity
-      description: >
-        The cover, shade, blind, or garage door to control.
-      selector:
-        entity:
-          domain: cover
-    use_entity_actions:
-      name: Use Entity Actions Instead of Device Actions
-      description: >
-        Enable this if your cover doesn't work with device actions. 
-        This will use entity-based service calls instead.
-      default: false
-      selector:
-        boolean:
+    options:
+      name: Further Options
+      description: Advanced configuration options
+      collapsed: true
+      input:
+        use_entity_actions:
+          name: Use Entity Actions Instead of Device Actions
+          description: >
+            Enable this if your cover doesn't work with device actions. 
+            This will use entity-based service calls instead.
+          default: false
+          selector:
+            boolean:
+        button_action:
+          name: Button Action
+          description: >
+            The specific button action to trigger the automation (e.g., button press, double press).
+          default: remote_button_short_press
+          selector:
+            select:
+              options:
+                - remote_button_short_press
+                - remote_button_long_press
+                - remote_button_double_press
+                - key_press_1
+                - key_press_2
+                - key_press_3
+                - key_press_4
+                - button_1
+                - button_2
+                - button_3
+                - button_4
+              custom_value: true
+        button_subtype:
+          name: Button Subtype (Optional)
+          description: >
+            Additional button identifier if needed (e.g., button_1, button_2). 
+            Leave empty if not required.
+          default: ""
+          selector:
+            text:
 
 variables:
   cover_entity: !input cover_entity
-  use_entity_actions: !input use_entity_actions
+  use_entity_actions: !input options.use_entity_actions
 
 trigger:
   - platform: device
     device_id: !input button_device
-    type: !input button_action
-    subtype: !input button_subtype
+    type: !input options.button_action
+    subtype: !input options.button_subtype
 
 condition: []
 
