@@ -7,7 +7,7 @@ blueprint:
 
     Press once to open if closed, close if open, or stop if moving. Perfect for awnings, blinds, curtains, and garage doors.
 
-    *Version:* 1.2.5
+    *Version:* 1.2.6
   domain: automation
   input:
     cover_entity:
@@ -18,7 +18,7 @@ blueprint:
         entity:
           domain: cover
     button_device:
-      name: Button Device
+      name: Button
       description: >
         The button or remote control device that will control the cover.
         Compatible with any device that can trigger device actions.
